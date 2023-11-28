@@ -31,7 +31,7 @@ public class Update {
 
     private static final String SELECT_SQL = "SELECT * FROM properties WHERE id = ?";
     private static final String UPDATE_SQL = "UPDATE properties SET street = ?, city = ?, listingNum = ?, styleId = ?,"
-            + "typeId = ?, bedrooms = ?, squarefeet = ?, berRating= ?, description = ?, lotsize = ?,"
+            + "typeId = ?, bedrooms = ?, bathrooms = ?, squarefeet = ?, berRating= ?, description = ?, lotsize = ?,"
             + "garagesize= ?, garageId = ?, agentId = ?, photo = ?, price = ?, dateAdded = ?  WHERE id = ?";
 
 
