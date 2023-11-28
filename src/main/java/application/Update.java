@@ -11,6 +11,7 @@ public class Update {
     public static Connection connect() throws SQLException {
         return DriverManager.getConnection(URL, USER, PASSWORD);
     }
+
     private static final String URL = "jdbc:mysql://localhost:3306/ihl_db";
     private static final String USER = "root";
     private static final String PASSWORD = "";
@@ -28,13 +29,10 @@ public class Update {
         }
     }
 
-
     private static final String SELECT_SQL = "SELECT * FROM properties WHERE id = ?";
     private static final String UPDATE_SQL = "UPDATE properties SET street = ?, city = ?, listingNum = ?, styleId = ?,"
             + "typeId = ?, bedrooms = ?, bathrooms = ?, squarefeet = ?, berRating= ?, description = ?, lotsize = ?,"
             + "garagesize= ?, garageId = ?, agentId = ?, photo = ?, price = ?, dateAdded = ?  WHERE id = ?";
-
-
 
     public static void displayCurrentValue(String fieldName, ResultSet resultSet, int columnIndex) throws SQLException {
         String currentValue = resultSet.getString(columnIndex);
@@ -56,7 +54,9 @@ public class Update {
                     case "street", "city", "berRating", "description", "lotsize", "photo" ->
                             updateStatement.setString(1, newValue);
                     case "listingNum", "styleId", "typeId", "bedrooms", "squarefeet", "garagesize", "garageId", "agentId", "price" ->
-                            updateStatement.setInt(2, Integer.parseInt(newValue));
+                            updateStatement.setInt(5, Integer.parseInt(newValue));
+                    case "bathrooms" ->
+                            updateStatement.setInt(6, Integer.parseInt(newValue));
                     case "dateAdded" -> {
                         System.out.print("Enter the new dateAdded (yyyy-MM-dd): ");
                         String dateString = scanner.next();
@@ -65,14 +65,14 @@ public class Update {
                             Date parsedDate = dateFormat.parse(dateString);
                             java.sql.Date sqlDate = new java.sql.Date(parsedDate.getTime());
 
-                            updateStatement.setDate(3, sqlDate);
+                            updateStatement.setDate(17, sqlDate);
                         } catch (ParseException e) {
                             e.printStackTrace();
                         }
                     }
                 }
 
-                updateStatement.setInt(1, id);
+                updateStatement.setInt(18, id);
 
                 int rowsAffected = updateStatement.executeUpdate();
 
@@ -121,6 +121,4 @@ public class Update {
             e.printStackTrace();
         }
     }
-
-
 }
