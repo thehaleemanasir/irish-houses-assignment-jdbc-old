@@ -3,3 +3,5 @@
 Include a README for your project once you have completed it :point_down:
 
 About to start working on this!
+# week one
+update and archive function
