@@ -6,3 +6,4 @@ About to start working on this!
 # week one
 update and archive function
 Completed Archive function
+Queries completed
