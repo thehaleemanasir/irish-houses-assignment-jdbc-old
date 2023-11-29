@@ -15,7 +15,7 @@ public class Archive {
 
     public static void main(String[] args) {
         try (Connection connection = DriverManager.getConnection(URL, USER, PASSWORD)) {
-            // Take user input for the record ID to archive or unarchive
+
             Scanner scanner = new Scanner(System.in);
             System.out.print("Enter the ID of the record to archive or unarchive: ");
             int recordId = scanner.nextInt();
@@ -53,8 +53,7 @@ public class Archive {
                     String street = resultSet.getString("street");
                     String city = resultSet.getString("city");
 
-                    // Your code to archive or process the record goes here
-                    //E.g. you could insert it into an archive table
+
                     archiveRecord(connection, id, propertyID, street, city);
                 } else {
                     System.out.println("Record with ID " + id + " not found.");
@@ -67,7 +66,7 @@ public class Archive {
 
     private static void archiveRecord(Connection connection, int id, int propertyID, String street, String city) {
 
-        // Your code to archive the record, for example, insert it into an archive table
+
         String archiveQuery = "INSERT INTO archiveproperty (id, propertyID, street, city) VALUES (?, ?, ?, ?)";
         try (PreparedStatement archiveStatement = connection.prepareStatement(archiveQuery)) {
             archiveStatement.setInt(1, id);

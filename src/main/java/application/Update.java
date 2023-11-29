@@ -41,15 +41,15 @@ public class Update {
 
     public static void updateField(String fieldName, PreparedStatement updateStatement, int id, Scanner scanner) {
         try {
-            // Ask for confirmation to update the field
+
             System.out.print("Do you want to update the " + fieldName + "? (yes/no): ");
             String confirmation = scanner.next().toLowerCase();
             if (confirmation.equals("yes")) {
                 System.out.print("Enter the new " + fieldName + ": ");
-                String newValue = scanner.nextLine(); // Consume the newline character
-                newValue = scanner.nextLine(); // Read the actual input
+                String newValue =
+                newValue = scanner.nextLine();
 
-                // Set the parameter based on the field name
+
                 switch (fieldName) {
                     case "street", "city", "berRating", "description", "lotsize", "photo" ->
                             updateStatement.setString(1, newValue);
