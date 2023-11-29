@@ -7,3 +7,5 @@ About to start working on this!
 update and archive function
 Completed Archive function
 Queries completed
+JFaker Completed 
+aditional functionality: PropertyStatisticsJFaker -> get the average price for the properties
