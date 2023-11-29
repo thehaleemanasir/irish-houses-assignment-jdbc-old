@@ -83,8 +83,8 @@ public class Archive {
     }
 
     private static void unarchiveRecord(Connection connection, int id) {
-        System.out.println("Trying to unarchive record with ID: " + id); // To check if it works.
-        // Your code to unarchive the record, for example, move it back to the original table
+        System.out.println("Trying to unarchive record with ID: " + id);
+
         String unarchiveQuery = "DELETE FROM archiveproperty WHERE id = ?";
         try (PreparedStatement unarchiveStatement = connection.prepareStatement(unarchiveQuery)) {
             unarchiveStatement.setInt(1, id);
