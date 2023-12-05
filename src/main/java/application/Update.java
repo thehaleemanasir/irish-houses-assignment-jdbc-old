@@ -13,8 +13,8 @@ public class Update {
     private static final String PASSWORD = "";
     private static final String SELECT_SQL = "SELECT * FROM properties WHERE id = ?";
     private static final String UPDATE_SQL = "UPDATE properties SET street = ?, city = ?, listingNum = ?, styleId = ?,"
-            + "typeId = ?, bedrooms = ?, bathrooms = ?, squarefeet = ?, berRating= ?, description = ?, lotsize = ?,"
-            + "garagesize= ?, garageId = ?, agentId = ?, photo = ?, price = ?, dateAdded = ?  WHERE id = 1";
+            + "typeId = ?, bedrooms = ?, bathrooms = ?, squarefeet = ?, berRating = ?, description = ?, lotsize = ?,"
+            + "garagesize = ?, garageId = ?, agentId = ?, photo = ?, price = ?, dateAdded = ?  WHERE id = ?";
 
     public static Connection connect() throws SQLException {
         return DriverManager.getConnection(URL, USER, PASSWORD);
@@ -27,7 +27,7 @@ public class Update {
             int recordIdToUpdate = scanner.nextInt();
 
             // Update the record with confirmation for each field
-            updateRecord(recordIdToUpdate, scanner);
+            updatePropertyRecord(recordIdToUpdate, scanner);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -40,16 +40,15 @@ public class Update {
 
     public static void updateField(String fieldName, String currentValue, PreparedStatement updateStatement, int parameterIndex, Scanner scanner) {
         try {
-
             System.out.print("Do you want to update the " + fieldName + "? (yes/no): ");
             String confirmation = scanner.next().toLowerCase();
             if (confirmation.equals("yes")) {
                 System.out.print("Enter the new " + fieldName + ": ");
                 String newValue = scanner.nextLine();
                 newValue = scanner.nextLine();
-                System.out.println(fieldName + parameterIndex);
+
                 switch (fieldName) {
-                    case "Street", "city", "berRating", "description", "lotsize", "photo" ->
+                    case "street", "city", "berRating", "description", "lotsize", "photo" ->
                             updateStatement.setString(parameterIndex, newValue);
                     case "listingNum", "styleId", "typeId", "bedrooms", "squarefeet", "garagesize", "garageId", "agentId", "price" -> {
                         try {
@@ -76,16 +75,15 @@ public class Update {
                             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
                             Date parsedDate = dateFormat.parse(dateString);
                             java.sql.Date sqlDate = new java.sql.Date(parsedDate.getTime());
-
                             updateStatement.setDate(parameterIndex, sqlDate);
                         } catch (ParseException e) {
                             e.printStackTrace();
                         }
                     }
                 }
-                System.out.println("currentValue" + currentValue);
-                // Update the current field value
-         //       updateStatement.setInt(19, 1);
+
+                // Set the parameter for the record ID
+                updateStatement.setInt(18, parameterIndex);
 
                 int rowsAffected = updateStatement.executeUpdate();
 
@@ -103,9 +101,7 @@ public class Update {
         }
     }
 
-
-
-    public static void updateRecord(int id, Scanner scanner) {
+    public static void updatePropertyRecord(int id, Scanner scanner) {
         try (Connection connection = connect();
              PreparedStatement selectStatement = connection.prepareStatement(SELECT_SQL);
              PreparedStatement updateStatement = connection.prepareStatement(UPDATE_SQL)) {
@@ -119,9 +115,9 @@ public class Update {
             }
 
             // Display current values for each field
-            displayCurrentValue("Street", resultSet, 1);
-            displayCurrentValue("City", resultSet, 2);
-            displayCurrentValue("Listing Num", resultSet, 3);
+            displayCurrentValue("Street", resultSet, 2);
+            displayCurrentValue("City", resultSet, 3);
+            displayCurrentValue("Listing Num", resultSet, 4);
             displayCurrentValue("Style ID", resultSet, 5);
             displayCurrentValue("Type ID", resultSet, 6);
             displayCurrentValue("Bedrooms", resultSet, 7);
@@ -138,7 +134,6 @@ public class Update {
             displayCurrentValue("Date Added", resultSet, 18);
 
             // Update each field
-           //updateField("id", String.valueOf(resultSet.getInt("id")), updateStatement, 1, scanner);
             updateField("Street", resultSet.getString("street"), updateStatement, 2, scanner);
             updateField("City", resultSet.getString("city"), updateStatement, 3, scanner);
             updateField("ListingNum", String.valueOf(resultSet.getInt("listingNum")), updateStatement, 4, scanner);
