@@ -3,16 +3,11 @@ package application;
 import com.github.javafaker.Faker;
 import java.math.BigDecimal;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Date;
 
 public class JFakeProperties {
-
-    private static final String DATABASE_URL = "jdbc:mysql://localhost:3306/ihl_db";
-    private static final String DATABASE_USER = "root";
-    private static final String DATABASE_PASSWORD = "";
 
     public static void main(String[] args) {
         Faker faker = new Faker();
@@ -53,7 +48,7 @@ public class JFakeProperties {
                                            int typeId, int bedrooms, int bathrooms, int squareFeet,
                                            String berRating, String description, int lotSize, int garageSize,
                                            int garageId, int agentId, String photo, BigDecimal price, Date dateAdded) {
-        try (Connection connection = DriverManager.getConnection(DATABASE_URL, DATABASE_USER, DATABASE_PASSWORD)) {
+        try (Connection connection = DatabaseUtility.getConnection()) {
             String sql = "INSERT INTO properties (street, city, listingNum, styleId, typeId, bedrooms, bathrooms," +
                     "squareFeet, berRating, description, lotSize, garageSize, garageId, agentId, photo, " +
                     "price, dateAdded) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";

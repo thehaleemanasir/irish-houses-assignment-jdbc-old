@@ -9,7 +9,7 @@ import java.util.Scanner;
 public class DynamicSQLQuery {
 
     public static void main(String[] args) throws SQLException {
-        try (Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/ihl_db", "root", "")) {
+        try (Connection connection = DatabaseUtility.getConnection()) {
             // Step 1: Prompt user for columns
             System.out.println("Enter columns to select (comma-separated or * for all): ");
             Scanner scanner = new Scanner(System.in);
